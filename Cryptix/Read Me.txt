@@ -1,0 +1,14 @@
+# File Encryptor/Decryptor
+## Description
+This is a simple, user-friendly file encryption and decryption tool built using Python and the `tkinter` library for the graphical user interface (GUI). The app uses AES (Advanced Encryption Standard) encryption in CBC (Cipher Block Chaining) mode to securely encrypt and decrypt files. The app also utilizes PBKDF2 (Password-Based Key Derivation Function 2) to derive a secure encryption key from a passphrase provided by the user.
+
+## Features
+- **File Encryption**: Encrypts any file using AES encryption with a passphrase.
+- **File Decryption**: Decrypts previously encrypted files by the user using the same passphrase.
+- **Passphrase-Based Security**: Uses a passphrase to derive a key for encryption/decryption using PBKDF2.
+- **Secure Storage**: Encrypted files are saved with a `.enc` extension and contain a salt and IV (Initialization Vector) for secure decryption.
+- **Easy-to-Use GUI**: Simple interface for selecting files and entering passphrases for encryption and decryption.
+
+@x-evxn Jan 2025 
+Lucky Trash Inc.
+
